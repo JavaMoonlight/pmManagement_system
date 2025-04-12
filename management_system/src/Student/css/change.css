@@ -1,0 +1,51 @@
+.container {
+    border: 2px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 24px;
+    margin: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    transition: all 0.3s ease;
+  }
+  
+  .card-wrapper:hover {
+    transform: translateY(-4px);
+    -webkit-transform: translateY(-4px);
+    -moz-transform: translateY(-4px);
+    -ms-transform: translateY(-4px);
+    -o-transform: translateY(-4px);
+}
+  
+  .party-image {
+    width: 100%;
+    max-width: 400px;
+    height: 600px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .caption {
+    text-align: center;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.85);
+    padding: 8px 0;
+  }
+  
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    .container {
+      margin: 12px;
+      padding: 12px;
+    }
+    
+    .party-image {
+      max-width: 100%;
+    }
+  }

@@ -1,0 +1,99 @@
+/* process.css */
+.process-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 24px;
+  }
+  
+  /* 发展进程样式 */
+  .stage-flow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    padding: 20px 0;
+  }
+  
+  .stage-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .stage-item {
+    text-align: center;
+    padding: 0 20px;
+  }
+  
+  .stage-icon {
+    margin-bottom: 12px;
+    border: 2px solid #d9d9d9;
+    transition: all 0.3s;
+  }
+  
+  .stage-item.active .stage-icon {
+    border-color: #52c41a;
+    box-shadow: 0 0 8px rgba(82, 196, 26, 0.3);
+  }
+  
+  .stage-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+  }
+  
+  .stage-arrow {
+    font-size: 24px;
+    color: #8c8c8c;
+    margin: 0 10px;
+    padding-left: 100px;
+  }
+  
+  /* 表格样式 */
+  .reward-title {
+    margin: 32px 0 24px !important;
+  }
+  
+  .type-award {
+    color: #52c41a;
+    font-weight: 500;
+  }
+  
+  .type-punish {
+    color: #ff4d4f;
+    font-weight: 500;
+  }
+  
+  /* 响应式适配 */
+  @media (max-width: 768px) {
+    .stage-flow {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .stage-container {
+      margin-bottom: 24px;
+    }
+  
+    .stage-arrow {
+      display: none;
+    }
+  }
+
+  /* 新增弹窗样式 */
+.ant-modal-body {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.reward-modal .ant-table {
+  margin-top: 16px;
+}
+
+/* 操作按钮间距 */
+.ant-table-cell .ant-btn-link {
+  margin-right: 8px;
+}
+
+/* 表单元素宽度 */
+.ant-form-item-control {
+  max-width: 400px;
+}

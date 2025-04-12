@@ -1,0 +1,114 @@
+/* 1. 基础重置 - 确保根元素填满整个视口 */
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* 防止全局滚动条 */
+}
+
+/* 2. 主布局容器 */
+.ant-layout {
+  min-height: 100vh; /* 最小高度为视口高度 */
+  display: flex;
+}
+
+/* 3. 侧边栏样式 */
+.ant-layout-sider {
+  height: 100vh; /* 高度等于视口高度 */
+  overflow: auto; /* 允许侧边栏内容滚动 */
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+/* 4. 右侧内容布局 */
+.ant-layout > .ant-layout {
+  flex: 1; /* 占据剩余空间 */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden; /* 防止布局溢出 */
+}
+
+/* 5. 头部样式 */
+.ant-layout-header {
+  flex: 0 0 64px; /* 固定高度 */
+  padding: 0;
+  line-height: 64px; /* 垂直居中按钮 */
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* 6. 内容区域 */
+.ant-layout-content {
+  flex: 1; /* 填充剩余空间 */
+  overflow: auto; /* 允许内容滚动 */
+  padding: 24px !important; /* 覆盖内联样式 */
+  margin: 24px 16px !important;
+}
+
+/* 7. 响应式调整 */
+@media (max-width: 768px) {
+  .ant-layout {
+    flex-direction: column;
+  }
+  
+  .ant-layout-sider {
+    width: 100% !important;
+    height: auto !important;
+    position: relative;
+  }
+  
+  .ant-layout-header {
+    position: sticky;
+    top: 0;
+  }
+}
+
+/* 8. 侧边栏折叠按钮样式 */
+.ant-btn {
+  align-items: center;
+  justify-content: center;
+}
+
+/* 9. 防止菜单换行 */
+.ant-menu-inline {
+  white-space: nowrap;
+}
+
+/* 10. 侧边栏折叠时的微调 */
+.ant-layout-sider-collapsed .ant-menu-item {
+  padding: 0 calc(50% - 10px) !important; /* 使图标居中 */
+}
+
+/* 左上角logo */
+img{
+  display: block;
+  width: 50%;
+  margin: 10px auto;
+  border-radius: 50%;
+}
+
+.app-title{
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.title-img{
+  width: 30px;
+  border-radius: 50%;
+  float: right;
+  margin-top: 16px;
+  margin-right: 20px;
+}
+
+.app-drop{
+  float: right;
+}
+
+.BreadC{
+  margin-bottom: 5px;
+}

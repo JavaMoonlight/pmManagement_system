@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      discovery:
+        namespace: dev
+        group: MMS
+      config:
+        namespace: dev
+        group: MMS
+        file-extension: yaml
+        refresh-enabled: true
+
+
+  profiles:
+    active: dev

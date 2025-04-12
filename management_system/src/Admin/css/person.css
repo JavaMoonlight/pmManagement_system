@@ -1,0 +1,225 @@
+/* person.css */
+.profile-container {
+  max-width: 800px;
+  margin: 5px auto;
+  padding: 10px 32px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* 表单主体内容亮色优化 */
+.ant-form-item-control-input-content {
+  background: #fff !important;
+}
+
+/* 输入框和选择器底色调整 */
+.ant-input,
+.ant-select-selector,
+.ant-picker {
+  background: #ffffff !important;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+}
+
+/* 禁用状态样式优化 */
+.ant-input-disabled, 
+.ant-picker-disabled, 
+.ant-select-disabled {
+  background: #f8f9fa !important;
+  color: rgba(0, 0, 0, 0.85);
+  border-color: #e9ecef;
+}
+
+/* 头像区域优化 */
+.avatar-section {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.profile-avatar {
+  border: 2px solid #1677ff;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(24,144,255,0.1);
+  transition: all 0.3s;
+}
+
+.verified-tag {
+  color: #52c41a;
+  font-weight: 600;
+  font-size: 14px;
+  text-shadow: 0 1px 2px rgba(82,196,26,0.1);
+}
+
+.action-buttons {
+  margin-top: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.back-btn {
+  width: 120px;
+  height: 40px;
+  border: 1px solid #1677ff;
+  color: #1677ff;
+  background: #f0f6ff; /* 新增底色 */
+}
+
+.edit-btn {
+  width: 120px;
+  height: 40px;
+  background: #ff4d4f;
+  border-color: #ff4d4f;
+  color: white;
+}
+
+/* 字段标签加粗 */
+.ant-form-item-label > label {
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* 新增悬停效果 */
+.ant-input:hover,
+.ant-select-selector:hover,
+.ant-picker:hover {
+  border-color: #4096ff;
+  box-shadow: 0 0 0 2px rgba(24,144,255,0.1);
+}
+
+.ant-input:focus,
+.ant-select-selector:focus,
+.ant-picker-focused {
+  border-color: #4096ff;
+  box-shadow: 0 0 0 2px rgba(24,144,255,0.2);
+}
+
+/* 修改禁用状态文字颜色 */
+.ant-input-disabled,
+.ant-select-disabled,
+.ant-picker-input > input[disabled] {
+  color: rgba(0, 0, 0, 0.7) !important; /* 加深文字颜色 */
+}
+
+/* 强化表单标签样式 */
+.ant-form-item-label > label {
+  color: rgba(0, 0, 0, 0.7) !important;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* 调整输入框边框 */
+.ant-input,
+.ant-select-selector,
+.ant-picker {
+  border-radius: 4px;
+}
+
+/* 调整输入框内边距 */
+.ant-input-affix-wrapper,
+.ant-picker {
+  padding: 6px 11px;
+}
+
+/* 调整行间距 */
+.ant-form-item {
+  margin-bottom: 18px !important;
+}
+
+/* 调整按钮边框 */
+.back-btn {
+  border-width: 1.5px;
+  font-weight: 500;
+}
+
+/* 修复Select选择框文字颜色 */
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* 禁用状态文字颜色强化 */
+.ant-select-disabled .ant-select-selection-item {
+  color: rgba(0, 0, 0, 0.7) !important; 
+  opacity: 1 !important; /* 去除默认的透明度 */
+}
+
+/* 下拉选项文字颜色 */
+.ant-select-item-option {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* 聚焦状态保持深色 */
+.ant-select-focused .ant-select-selection-item {
+  color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.edit-btn {
+  background: #ffa39e; /* 淡红色 */
+  border-color: #ffa39e;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background: #ff7875 !important;
+  border-color: #ff7875 !important;
+  color: #fff !important;
+}
+
+.done-btn {
+  background: #73d13d !important; /* 绿色 */
+  border-color: #73d13d !important;
+  color: #fff !important;
+}
+
+.done-btn:hover {
+  background: #5cb860 !important;
+  border-color: #5cb860 !important;
+}
+
+/* 调整按钮间距 */
+.action-buttons {
+  gap: 16px; /* 增加按钮间距 */
+}
+
+/* 启用状态下的输入框样式 */
+.ant-input:not([disabled]), 
+.ant-select:not(.ant-select-disabled) .ant-select-selector,
+.ant-picker:not(.ant-picker-disabled) {
+  background: #fff !important;
+  border-color: #40a9ff !important;
+  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+}
+
+/* 添加自定义样式 */
+.ant-picker-panel {
+  min-width: 320px;
+}
+
+.custom-controls {
+  padding: 8px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.ant-picker-footer .ant-btn-group {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+}
+
+.ant-picker-footer .ant-btn {
+  padding: 0 8px;
+}
+
+/* 添加禁用按钮样式 */
+.ant-picker-footer .ant-btn[disabled] {
+  background-color: #f5f5f5;
+  border-color: #d9d9d9;
+  color: rgba(0,0,0,0.25);
+  cursor: not-allowed;
+}
+
+/* 修复悬停问题 */
+.ant-picker-cell:hover .ant-picker-cell-inner {
+  background: none; /* 移除默认的悬停背景色 */
+}
