@@ -59,10 +59,27 @@
 
 /* 公告标题 */
 .item-title {
+  display: inline-block;
+  max-width: 400px; /* 根据实际布局调整 */
   font-size: 16px;
   color: #1890ff !important;
   font-weight: 500;
-  margin-left: 30px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .item-title {
+    max-width: 60vw;
+  }
+}
+
+/* 确保按钮容器不收缩 */
+.ant-list-item-action {
+  flex-shrink: 0;
 }
 
 /* 分页样式 */
@@ -86,13 +103,6 @@
   line-height: 1.8;
   max-height: 60vh;
   overflow-y: auto;
-}
-
-/* 原有样式优化 */
-.item-title {
-  color: #1677ff;
-  cursor: pointer;
-  transition: color 0.3s;
 }
 
 .item-title:hover {
@@ -144,4 +154,10 @@
 /* 操作按钮间距 */
 .ant-btn-link + .ant-btn-link {
   margin-left: 8px;
+}
+
+.title-container {
+  flex: 1;
+  min-width: 0; /* 允许内容截断 */
+  margin-left: 30px;
 }

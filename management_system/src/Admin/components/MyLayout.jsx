@@ -11,7 +11,7 @@ import {
   UsergroupAddOutlined
 } from '@ant-design/icons';
 import { Button, Layout, Menu, theme, Dropdown, Breadcrumb, message  } from 'antd';
-import logo from '../../img/1.jpg';
+import logo from '../../img/2.jpg';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 
 const { Header, Sider, Content } = Layout;

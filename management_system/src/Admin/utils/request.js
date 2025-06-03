@@ -36,8 +36,6 @@ instance.interceptors.response.use(function (response) {
 export const get = (url, params={}) => 
     instance.get(url, params).then((res) => res.data);
 
-// export const post = (url, data={}) => 
-//     instance.post(url, data).then((res) => res.data);
 export const post = (url, data = {}, config = {}) => 
   instance.post(url, data, config).then((res) => res.data);
 
@@ -47,5 +45,5 @@ export const put = (url, data={}) =>
 export const patch = (url, data={}) => 
     instance.patch(url,data).then((res) => res.data);
 
-export const del = (url) => 
-    instance.delete(url).then((res) => res.data);
+export const del = (url,  config = {}) => 
+    instance.delete(url, config).then((res) => res.data);

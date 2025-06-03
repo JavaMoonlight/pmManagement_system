@@ -4,28 +4,27 @@ import '../css/announcement.css';
 import { delByIdAPI, insertAPI, loadDataByIdAPI, updateByIdAPI } from '../services/announce';
 import { useNavigate } from 'react-router-dom';
 import { NotificationOutlined } from '@ant-design/icons';
-import MyEditor from '../components/MyEditor'; // 引入富文本编辑器
+import MyEditor from '../components/MyEditor';  // 引入富文本编辑器
 
 const { Title } = Typography;
 
 const Announcement = () => {
-  const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [pageNum, setpageNum] = useState(1);
-  const [size, setsize] = useState(5);
+  const [size, setsize] = useState(5);  // 每页显示条目数
   const [total, setTotal] = useState(0);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);  // 控制详情弹窗的显示
   const [currentContent, setCurrentContent] = useState({ title: '', content: '' });
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);   // 控制编辑/新增弹窗的显示
   const [editMode, setEditMode] = useState(false);
-  const [currentId, setCurrentId] = useState(null);
+  const [currentId, setCurrentId] = useState(null);   // 当前编辑的公告ID
   const [formTitle, setFormTitle] = useState('');
   const [formContent, setFormContent] = useState('');
 
   // 获取公告数据
   useEffect(() => {
     loadDataByIdAPI(pageNum, size).then((res) => {
-      console.log(res)
+      // console.log(res)
       setData(res.data.records);
       setTotal(res.data.total);
     });
@@ -33,18 +32,15 @@ const Announcement = () => {
 
   // 显示编辑/新增弹窗
   const showEditModal = (item) => {
-    if (item) {
+    if (item) {   // 编辑模式
       setFormTitle(item.title);
       setFormContent(item.content);
-      setCurrentId(item.id);
+      setCurrentId(item.id);    
       setEditMode(true);
-    } else {
-      // setFormTitle('');
-      // setFormContent('');
-      // setEditMode(false);
+    } else {      // 新增模式
       setFormTitle('');
       setFormContent('');
-      setCurrentId(null); // 明确重置为null
+      setCurrentId(null);
       setEditMode(false);
     }
     setIsModalVisible(true);
@@ -52,27 +48,24 @@ const Announcement = () => {
 
   // 提交表单
   const handleSubmit = () => {
-    // 新增时不带id字段
-  const payload = editMode ? {
-    id: currentId.toString(),
-    title: formTitle,
-    content: formContent,
-    publisher: "总管理员",
-    createTime: new Date().toISOString()
-  } : {
-    title: formTitle,
-    content: formContent,
-    publisher: "总管理员",
-    createTime: new Date().toISOString()
-  };
-  
+    const payload = editMode ? {
+      id: currentId.toString(),
+      title: formTitle,
+      content: formContent,
+      publisher: "总管理员",
+      createTime: new Date().toISOString()    // 生成ISO格式时间
+    } : {
+      title: formTitle,
+      content: formContent,
+      publisher: "总管理员",
+      createTime: new Date().toISOString()
+    };
+    
     (editMode ? updateByIdAPI(payload) : insertAPI(payload))
     .then(() => {
-      // 新增后重置到第一页
-      if (!editMode) {
+      if (!editMode) {      // 新增后重置页码到第一页
         setpageNum(1);
       }
-      // 强制清空表单状态
       setFormTitle('');
       setFormContent('');
       setCurrentId(null);
@@ -84,24 +77,17 @@ const Announcement = () => {
         setTotal(res.data.total);
         setIsModalVisible(false);
       }
-      //   () => {
-      //   loadDataByIdAPI(pageNum, size).then(res => {
-      //     setData(res.data.records);
-      //     setTotal(res.data.total);
-      //   });
-      //   setIsModalVisible(false);
-      // }
     ).catch(err => {
         Modal.error({
           title: '操作失败',
           content: err.response?.data?.message || '服务器内部错误'
         });
       });
-  };
+    };
 
   // 删除处理
   const handleDelete = (id) => {
-    console.log(id)
+    // console.log(id)
     delByIdAPI(id).then(() => {
       setData(prev => prev.filter(item => item.id !== id));
     });
@@ -124,7 +110,7 @@ const Announcement = () => {
 
     // 处理每页大小变化
     const handleSizeChange = (current, newSize) => {
-      setpageNum(1); // 重置到第一页
+      setpageNum(1); 
       setsize(newSize);
     };
 
@@ -134,8 +120,7 @@ const Announcement = () => {
         <Title level={3} className="announcement-title">通知公告</Title>
         <Button className='announcementbutton' type="primary" onClick={() => showEditModal(null)}>新增公告</Button>
       </Flex>
-      
-      {/* 列表新增操作按钮 */}
+
       <List
         itemLayout="vertical"
         dataSource={data}
@@ -158,9 +143,11 @@ const Announcement = () => {
                   </div>
                   <List.Item.Meta
                     title={
-                      <a className="item-title" onClick={() => showDetail(item)}>
-                        {item.title}
-                      </a>
+                      <div className="title-container">
+                        <a className="item-title" onClick={() => showDetail(item)}>
+                          {item.title}
+                        </a>
+                      </div>
                     }
                   />
                 </div>
@@ -185,7 +172,7 @@ const Announcement = () => {
         <Input
           placeholder="公告标题"
           value={formTitle}
-          onChange={(e) => setFormTitle(e.target.value)}
+          onChange={(e) => setFormTitle(e.target.value)}    // 绑定标题输入
           style={{ marginBottom: 16 }}
         />
         <MyEditor 
@@ -209,14 +196,11 @@ const Announcement = () => {
         className="announcement-modal"
         width={680} // 加宽弹窗
       >
-        {/* <div className="modal-content-container">
-          <pre className="modal-content-text"><NotificationOutlined />  {currentContent.content}</pre>
-        </div> */}
         <div className="modal-content-container">
         <div 
           className="modal-content-text"
-          dangerouslySetInnerHTML={{ __html: currentContent.content }}
-        />
+          dangerouslySetInnerHTML={{ __html: currentContent.content }}    
+        />      {/* 渲染富文本HTML */}
         </div>
       </Modal>
 
@@ -229,7 +213,6 @@ const Announcement = () => {
         showSizeChanger
         showQuickJumper
         onChange={handlePageChange}
-        // onShowSizeChange={handlePageChange}
         onShowSizeChange={handleSizeChange}
       />
     </div>

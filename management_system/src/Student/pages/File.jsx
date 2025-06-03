@@ -4,7 +4,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import { 
   loadDataByUserNameAPI,
   insertAPI,
-  delByIdAPI
+  delByIdAPI,
+  getByTokenAPI
 } from '../services/fileUtil';
 import { getToken } from '../utils/tool';
 import '../css/file.css';
@@ -15,18 +16,42 @@ const FilePage = () => {
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
+    const loadUserAndFiles = async () => {
+      try {
+        // 先获取用户信息
+        const profileRes = await getByTokenAPI();
+        // console.log(profileRes)
+        const username = profileRes.data.username;     
+        // 再加载文件列表（带username参数）
+        const fileRes = await loadDataByUserNameAPI({
+          username,
+          pageNum: 1,
+          pageSize: 10
+        });
+        console.log(fileRes)
+        setFiles(fileRes.data.records);
+      } catch (error) {
+        message.error('初始化失败');
+      }
+    };
+    loadUserAndFiles();
+  }, []);
+
+  useEffect(() => {
     loadFiles();
   }, []);
 
   // 加载文件列表
   const loadFiles = async () => {
     try {
+      const profileRes = await getByTokenAPI();
+      const username = profileRes.data.username;     
       const res = await loadDataByUserNameAPI({
-        headers: {
-          Authorization: `Bearer ${getToken()}`
-        }
+        username,
+        pageNum: 1,
+        pageSize: 10
       });
-      setFiles(res.data?.data || []);
+      setFiles(res.data.records || []);
     } catch (error) {
       message.error('文件加载失败');
     }
@@ -58,21 +83,26 @@ const FilePage = () => {
 
   // 文件下载
   const handleDownload = (filename) => {
-    const link = document.createElement('a');
-    link.href = `/profile/download/${filename}`;
-    link.download = filename;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    fetch(`/profile/download/${filename}`, {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    })
+    .then(res => res.blob())
+    .then(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
   };
 
   // 文件删除
-  const handleDelete = async (id) => {
+  const handleDelete = async (fileId) => {
     try {
-      await delByIdAPI(
-        { id },
-        { headers: { Authorization: `Bearer ${getToken()}` } }
-      );
+      await delByIdAPI(fileId);
       message.success('删除成功');
       loadFiles();
     } catch (error) {

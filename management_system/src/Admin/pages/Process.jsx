@@ -14,14 +14,17 @@ const processStages = [
 ];
 
 const ProcessPage = () => {
-  const [currentStage, setCurrentStage] = useState('');
+  // 发展状态相关
+  const [currentStage, setCurrentStage] = useState('');   // 当前用户的发展阶段
   const [users, setUsers] = useState([]);
-  const [userPagination, setUserPagination] = useState({
+  const [userPagination, setUserPagination] = useState({  // 分页配置
     current: 1,
     pageSize: 6,
     total: 0
   });
   const [userLoading, setUserLoading] = useState(false);
+
+  // 奖惩信息相关
   const [selectedUser, setSelectedUser] = useState(null);
   const [rewardPagination, setRewardPagination] = useState({
     current: 1,
@@ -52,13 +55,13 @@ const ProcessPage = () => {
 
   // 初始化数据加载
   useEffect(() => {
-    fetchUsers(userPagination);
+    fetchUsers(userPagination);           // 调用获取用户函数
   }, []); 
 
   // 监听选中奖励变化
   useEffect(() => {
     if (editModalVisible && selectedReward) {
-      form.setFieldsValue(selectedReward); // 关键：设置表单值
+      form.setFieldsValue(selectedReward); // 设置表单值
     }
   }, [selectedReward, editModalVisible, form]);
 
@@ -71,8 +74,8 @@ const ProcessPage = () => {
         pageSize: pagination.pageSize
       });
       // console.log(data)
-      setUsers(data.records || []);
-      setUserPagination({
+      setUsers(data.records || []);     // 更新用户列表
+      setUserPagination({               // 更新分页配置
         ...pagination,
         total: data.total || 0
       });
@@ -90,20 +93,15 @@ const ProcessPage = () => {
         pageNum: pagination.current || 1,
         pageSize: pagination.pageSize || 3
       });
-      console.log(data)
-      setRewards(data.records);
-      // setRewardPagination({
-      //   ...pagination,
-      //   total: data.total
-      // });
-      setRewardPagination({
-        // ...pagination,
+      // console.log(data)
+      setRewards(data.records);         // 更新奖惩列表
+      setRewardPagination({             // 更新分页配置
         current: data.current || 1,
         pageSize: data.size || 3,
         total: data.total || 0
       });
     } catch (error) {
-      console.error('获取用户列表失败:', error);
+      // console.error('获取用户列表失败:', error);
       message.error("获取用户列表失败");
     }
   };
@@ -118,48 +116,44 @@ const ProcessPage = () => {
 
   // 处理查看用户奖惩
   const handleViewRewards = (user) => {
-    setSelectedUser(user);
+    setSelectedUser(user);  // 记录选中用户
     setModalVisible(true);
-    fetchRewards(user.username, rewardPagination);
+    fetchRewards(user.username, rewardPagination);  // 加载数据
   };
 
-  // 处理新增奖惩
+  // 新增奖惩
   const handleAddReward = async (values) => {
-    console.log(values)
+    // console.log(values)
     try {
       await addRewardAPI({
         ...values,
         username: selectedUser.username  // 添加当前用户的username
       });
-      // message.success('新增成功');
-      // fetchRewards(selectedUser.username, rewardPagination);
-      // setAddModalVisible(false);
       // 重置分页到第一页
-
       const newPagination = { ...rewardPagination, current: 1 };
       setRewardPagination(newPagination);
       fetchRewards(selectedUser.username, newPagination);
       setAddModalVisible(false);
-      form.resetFields(); // 新增：重置表单字段
+      form.resetFields(); // 重置表单字段
 
     } catch (error) {
       message.error('新增失败');
     }
   };
 
-  // 处理更新奖惩
+  // 更新奖惩
   const handleUpdateReward = async (values) => {
     try {
       await updateRewardAPI(values);
       message.success('更新成功');
-      fetchRewards(selectedUser.username, rewardPagination);
+      fetchRewards(selectedUser.username, rewardPagination);    // 刷新数据
       setEditModalVisible(false);
     } catch (error) {
       message.error('更新失败');
     }
   };
 
-  // 处理删除奖惩
+  // 删除奖惩
   const handleDeleteReward = async (id) => {
     try {
       await deleteRewardAPI(id);
@@ -178,29 +172,13 @@ const ProcessPage = () => {
     {
       title: '操作',
       key: 'action',
-      render: (_, record) => (
+      render: (_, record) => (        // 自定义渲染操作列
         <Button type="link" onClick={() => handleViewRewards(record)}>
           查看奖惩
         </Button>
       )
     }
   ];  
-
-  // // 表格列配置
-  // const columns = [
-  //   {
-  //     title: '类型',
-  //     dataIndex: 'type',
-  //     render: text => (
-  //       <span className={`type-${text === '奖' ? 'award' : 'punish'}`}>
-  //         {text}
-  //       </span>
-  //     )
-  //   },
-  //   { title: '名称', dataIndex: 'name' },
-  //   { title: '描述', dataIndex: 'description' },
-  //   { title: '时间', dataIndex: 'time' }
-  // ];
 
   return (
     <div className="process-container">
@@ -223,17 +201,6 @@ const ProcessPage = () => {
         ))}
       </div>
 
-      {/* 奖惩记录表格
-      <Title level={4} className="reward-title">奖惩情况</Title>
-      <Table
-        columns={columns}
-        dataSource={rewards}
-        rowKey="id"
-        loading={loading}
-        pagination={false}
-        bordered
-      /> */}
-
       {/* 用户信息表格 */}
       <Title level={4} className="reward-title">用户列表</Title>
       <Table
@@ -252,10 +219,10 @@ const ProcessPage = () => {
 
       {/* 奖惩信息弹窗 */}
       <Modal
-        title={`${selectedUser?.username} 的奖惩记录`}
+        title={`${selectedUser?.realName} 的奖惩记录`}
         visible={modalVisible}
         onCancel={() => setModalVisible(false)}
-        footer={null}
+        footer={null}     // 隐藏默认底部按钮
         width={800}
       >
         <Button 
@@ -320,10 +287,10 @@ const ProcessPage = () => {
       <Modal
         title="新增奖惩"
         visible={addModalVisible}
-        destroyOnClose  // 关键属性：关闭时销毁表单
+        destroyOnClose  // 关闭时销毁表单
         onCancel={() => {
           setAddModalVisible(false);
-          form.resetFields();  // 双重保险重置
+          form.resetFields();  // 重置表单
         }}
         // onCancel={() => setAddModalVisible(false)}
         onOk={() => form.submit()}
@@ -349,7 +316,7 @@ const ProcessPage = () => {
         title="更新奖惩"
         visible={editModalVisible}
         // onCancel={() => setEditModalVisible(false)}
-        destroyOnClose  // 关键属性：关闭时销毁表单
+        destroyOnClose  //关闭时销毁表单
         onCancel={() => {
           setEditModalVisible(false);
           form.resetFields(); // 关闭时重置表单

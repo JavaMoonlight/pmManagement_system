@@ -45,5 +45,5 @@ export const put = (url, data={}) =>
 export const patch = (url, data={}) => 
     instance.patch(url,data).then((res) => res.data);
 
-export const del = (url) => 
-    instance.delete(url).then((res) => res.data);
+export const del = (url,  config = {}) => 
+    instance.delete(url, config).then((res) => res.data);

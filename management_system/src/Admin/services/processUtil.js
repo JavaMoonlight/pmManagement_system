@@ -19,7 +19,7 @@ export const ByTokenAPI = () =>
 
 // 获取所有用户信息
 export const getAllUsersAPI = (params) => 
-  get('/profile/getAll', {params});
+  get('/profile/list', {params});
 
 // 获取用户奖惩信息
 export const getUserRewardsAPI = (username, params) => 
